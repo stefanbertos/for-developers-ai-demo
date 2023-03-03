@@ -1,15 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
-import {
-  HeroLayout3 
- } from './ui-components';
+ import {BrowserRouter, Route, Routes} from 'react-router-dom';
+ import { withAuthenticator } from '@aws-amplify/ui-react';
+ import { Layout } from './Layout';
+ import {Home} from './Home';
+ import {Banner} from './ui-components'
 
-function App() {
+ function App({ signOut, user }) {
   return (
-    <div className="App">
-      <HeroLayout3 />
-    </div>
+    <BrowserRouter>
+    <Routes>
+                    <Route path="/" element={<Layout user={user} signOut={signOut} />}>
+                        <Route index element={<Home />}/>
+                        <Route
+                            path="/hackathon"
+                            element={
+                              <Banner className="hackathon" width={"100%"} height={"1000px"}/>
+                                       }
+                        />
+                        </Route>
+   
+      </Routes>
+    </BrowserRouter>
   );
 }
 
-export default App;
+export default withAuthenticator(App);
+
+//

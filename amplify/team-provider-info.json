@@ -10,6 +10,11 @@
       "StackName": "amplify-aidemo-staging-100545",
       "StackId": "arn:aws:cloudformation:eu-central-1:536115498177:stack/amplify-aidemo-staging-100545/cce86c90-b8e1-11ed-8184-0a1198a738f4",
       "AmplifyAppId": "d34wjlzj1f9v16"
+    },
+    "categories": {
+      "auth": {
+        "aidemo": {}
+      }
     }
   }
 }
