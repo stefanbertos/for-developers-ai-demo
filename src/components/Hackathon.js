@@ -1,7 +1,20 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Banner } from "../ui-components";
-import {toast} from "react-toastify";
-import { FileUploader } from "@aws-amplify/ui-react";
+import { toast } from "react-toastify";
+import { FileUploader, Button } from "@aws-amplify/ui-react";
+
+async function generateImage() {
+  //https://www.npmjs.com/package/openai
+
+
+  /*const response = await openai.createImage({
+    prompt: "a white siamese cat",
+    n: 1,
+    size: "1024x1024",
+  });
+  image_url = response.data.data[0].url;*/
+  console.log('Huraaa');
+}
 
 export function Hackathon(props) {
   const [myFiles, setMyFiles] = useState([]);
@@ -10,7 +23,7 @@ export function Hackathon(props) {
     let tempFiles = myFiles;
     tempFiles.push(key);
     setMyFiles(tempFiles);
-    notifyToastSuccess('File uploaded ' + key);
+    notifyToastSuccess("File uploaded " + key);
   };
   const onError = (error) => {
     notifyToastError("File couldn't be uploaded due to " + error);
@@ -32,6 +45,7 @@ export function Hackathon(props) {
           Docs - https://ui.docs.amplify.aws/react/getting-started/installation
         </li>
         <li>https://www.fordevelopers.org/ </li>
+        <li>https://platform.openai.com/docs/guides/images</li>
       </ul>
 
       <FileUploader
@@ -43,12 +57,16 @@ export function Hackathon(props) {
         maxFileCount={10}
         shouldAutoProceed={true}
         isPreviewerVisible={true}
-        isResumable={true}        
-        acceptedFileTypes={['.jpeg', '.jpg', '.png']}
+        isResumable={true}
+        acceptedFileTypes={[".jpeg", ".jpg", ".png"]}
         accessLevel="private"
       />
 
       <div>{myFiles}</div>
+
+      <Button loadingText="" onClick={async() => {await generateImage()}} ariaLabel="">
+        Generate Image
+      </Button>
     </>
   );
 }
