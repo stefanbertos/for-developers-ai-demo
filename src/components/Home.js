@@ -1,4 +1,4 @@
-import {Banner} from "./ui-components";
+import {Banner} from "../ui-components";
 import React from "react";
 
 export function Home(props) {

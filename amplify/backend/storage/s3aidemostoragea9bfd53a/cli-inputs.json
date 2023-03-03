@@ -1,0 +1,11 @@
+{
+  "resourceName": "s3aidemostoragea9bfd53a",
+  "bucketName": "ai-demo-storage-a9bfd53a",
+  "policyUUID": "3b6411cf",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ"
+  ]
+}

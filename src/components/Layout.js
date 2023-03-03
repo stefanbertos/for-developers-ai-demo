@@ -2,7 +2,7 @@ import React from 'react';
 import {Outlet} from 'react-router-dom';
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { Navigation, Footer } from './ui-components';
+import { Navigation, Footer } from '../ui-components';
 import {useNavigate} from "react-router-dom";
 
 export function Layout(props) {
