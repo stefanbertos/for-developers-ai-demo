@@ -9,11 +9,25 @@
       "UnauthRoleName": "amplify-aidemo-staging-100545-unauthRole",
       "StackName": "amplify-aidemo-staging-100545",
       "StackId": "arn:aws:cloudformation:eu-central-1:536115498177:stack/amplify-aidemo-staging-100545/cce86c90-b8e1-11ed-8184-0a1198a738f4",
-      "AmplifyAppId": "d34wjlzj1f9v16"
+      "AmplifyAppId": "d34wjlzj1f9v16",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-aidemo-staging-100545-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
       "auth": {
         "aidemo": {}
+      },
+      "storage": {
+        "s3aidemostoragea9bfd53a": {}
+      },
+      "function": {
+        "openapi": {
+          "secretsPathAmplifyAppId": "d34wjlzj1f9v16",
+          "deploymentBucketName": "amplify-aidemo-staging-100545-deployment",
+          "s3Key": "amplify-builds/openapi-4f4862625a3235376a66-build.zip"
+        }
+      },
+      "api": {
+        "openapi": {}
       }
     }
   }

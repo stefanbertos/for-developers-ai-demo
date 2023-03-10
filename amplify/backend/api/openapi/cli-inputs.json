@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "paths": {
+    "/image": {
+      "name": "/image",
+      "lambdaFunction": "openapi",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create"
+        ]
+      }
+    }
+  }
+}

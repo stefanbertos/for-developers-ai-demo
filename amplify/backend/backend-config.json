@@ -1,4 +1,20 @@
 {
+  "api": {
+    "openapi": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "openapi"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
   "auth": {
     "aidemo": {
       "customAuth": false,
@@ -31,6 +47,40 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    }
+  },
+  "function": {
+    "openapi": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_openapi_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "openapi"
+        }
+      ]
+    },
+    "AMPLIFY_function_openapi_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "openapi"
+        }
+      ]
+    },
+    "AMPLIFY_function_openapi_secretsPathAmplifyAppId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "openapi"
+        }
+      ]
     }
   },
   "storage": {

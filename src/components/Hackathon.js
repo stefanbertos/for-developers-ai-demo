@@ -1,72 +1,119 @@
 import React, { useState } from "react";
-import { Banner } from "../ui-components";
-import { toast } from "react-toastify";
-import { FileUploader, Button } from "@aws-amplify/ui-react";
-
-async function generateImage() {
-  //https://www.npmjs.com/package/openai
-
-
-  /*const response = await openai.createImage({
-    prompt: "a white siamese cat",
-    n: 1,
-    size: "1024x1024",
-  });
-  image_url = response.data.data[0].url;*/
-  console.log('Huraaa');
-}
+import { Banner, HackathonDashboard } from "../ui-components";
+import { Image } from "@aws-amplify/ui-react";
+import { Collection } from "@aws-amplify/ui-react";
+import { API } from "aws-amplify";
 
 export function Hackathon(props) {
-  const [myFiles, setMyFiles] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imageResolution, setImageResolution] = React.useState("1024x1024");
+  const [numberOfImages, setNumberOfImages] = React.useState(1);
+  const [prompt, setPrompt] = React.useState("a white siamese cat");
+  const [generatedImages, setGeneratedImages] = useState([]);
 
-  const onSuccess = ({ key }) => {
-    let tempFiles = myFiles;
-    tempFiles.push(key);
-    setMyFiles(tempFiles);
-    notifyToastSuccess("File uploaded " + key);
-  };
-  const onError = (error) => {
-    notifyToastError("File couldn't be uploaded due to " + error);
-  };
+  function generateImage() {
+    API.post("openapi", "/image", {
+      body: {
+        prompt: prompt,
+        numberOfImages: numberOfImages,
+        imageResolution: imageResolution,
+      },
+    })
+      .then((result) => {
+        console.log(result);
+        setGeneratedImages(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
-  const notifyToastSuccess = (info) => toast.info(info);
-  const notifyToastError = (error) => toast.error(error);
+  function generateVariation() {
+    getBase64(selectedImage)
+      .then((encodedImage) => {
+        API.post("openapi", "/image", {
+          body: {
+            prompt: prompt,
+            numberOfImages: numberOfImages,
+            imageResolution: imageResolution,
+            image: encodedImage,
+          },
+        })
+          .then((result) => {
+            console.log(result);
+            setGeneratedImages(result);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
+      .catch((error) => {
+        console.log(error); // Logs an error if there was one
+      });
+  }
+
+  function getBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  }
+
+  const hackathonDashboardOverrides = {
+    ImageResolutionSelectField: {
+      options: ["1024x1024", "512x512", "256x256"],
+      defaultValue: imageResolution,
+      onChange: (e) => setImageResolution(e.target.value),
+    },
+    NumberOfImagesStepperField: {
+      defaultValue: numberOfImages,
+      onStepChange: (newValue) => setNumberOfImages(newValue),
+    },
+    PromptTextAreaField: {
+      defaultValue: prompt,
+      onChange: (newValue) => setPrompt(newValue),
+    },
+    GenerateImageButton: {
+      onClick: () => {
+        generateImage();
+      },
+    },
+    GenerateVariationButton: {
+      onClick: () => {
+        generateVariation();
+      },
+    },
+  };
 
   return (
     <>
       <Banner className="hackathon" width={"100%"} height={"1000px"} />
-      <ul>
-        <li>
-          Figma -
-          https://www.figma.com/file/SGFDDkwrB7qL4WOwGYBZjd/AWS-Amplify-UI-Kit-(Community)?node-id=861%3A3635&t=1Qkp4W7zNn9wepcv-0
-        </li>
-        <li>Github - https://github.com/stefanbertos/for-developers-ai-demo</li>
-        <li>
-          Docs - https://ui.docs.amplify.aws/react/getting-started/installation
-        </li>
-        <li>https://www.fordevelopers.org/ </li>
-        <li>https://platform.openai.com/docs/guides/images</li>
-      </ul>
-
-      <FileUploader
-        onSuccess={onSuccess}
-        onError={onError}
-        variation="drop"
-        showImages={true}
-        hasMultipleFiles={true}
-        maxFileCount={10}
-        shouldAutoProceed={true}
-        isPreviewerVisible={true}
-        isResumable={true}
-        acceptedFileTypes={[".jpeg", ".jpg", ".png"]}
-        accessLevel="private"
+      <HackathonDashboard
+        overrides={hackathonDashboardOverrides}
+        imageLoader={
+          <input
+            type="file"
+            name="myImage"
+            accept="image/png"
+            onChange={(event) => {
+              console.log(event);
+              setSelectedImage(event.target.files[0]);
+            }}
+          />
+        }
       />
 
-      <div>{myFiles}</div>
-
-      <Button loadingText="" onClick={async() => {await generateImage()}} ariaLabel="">
-        Generate Image
-      </Button>
+      <Collection
+        items={generatedImages}
+        type="list"
+        direction="row"
+        gap="20px"
+        wrap="nowrap"
+      >
+        {(item, index) => <Image key={index} src={item.url}></Image>}
+      </Collection>
     </>
   );
 }
