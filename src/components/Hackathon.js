@@ -91,7 +91,27 @@ export function Hackathon(props) {
   return (
     <>
       <Banner className="hackathon" width={"100%"} height={"1000px"} />
-      <HackathonDashboard
+      
+      <Image src="/image1.png"/>
+      <Image src="/image2.png"/>
+      <Image src="/image3.png"/>
+      <Image src="/image4.png"/>
+      <Image src="/image5.png"/>
+      <Image src="/image6.png"/>
+      <Image src="/image7.png"/>
+      <Image src="/image8.png"/>
+      <Image src="/image9.png"/>
+      <Image src="/image10.png"/>
+      <Image src="/image11.png"/>
+      <Image src="/image12.png"/>
+      <Image src="/image13.png"/>
+      <Image src="/image14.png"/>
+      <Image src="/image15.png"/>
+      <Image src="/image16.png"/>
+      <Image src="/image17.png"/>
+      
+      <
+        HackathonDashboard
         overrides={hackathonDashboardOverrides}
         imageLoader={
           <input
