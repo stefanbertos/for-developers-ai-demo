@@ -1,6 +1,7 @@
 import { GetParameterCommand, SSMClient } from "@aws-sdk/client-ssm";
 import { Configuration, OpenAIApi } from "openai";
 import fs from "fs";
+import { Buffer } from 'buffer';
 
 const ssmClient = new SSMClient({ region: process.env["REGION"] });
 const input = { Name: process.env["openapiSecret"], WithDecryption: true };
@@ -19,9 +20,10 @@ export const handler = async (event) => {
 
   let response;
   if (request.image) {
-    fs.writeFileSync("/tmp/image.png", request.image, "base64");
+    let decoded = Buffer.from(request.image, 'base64');
+    console.log(decoded);
     response = await openai.createImageVariation(
-      fs.createReadStream("/tmp/image.png"),
+      decoded.toString(),
       request.numberOfImages,
       request.imageResolution
     );
