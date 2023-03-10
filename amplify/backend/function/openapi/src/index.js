@@ -16,14 +16,14 @@ const openai = new OpenAIApi(configuration);
  */
 export const handler = async (event) => {
   const request = JSON.parse(event.body);
-  console.log(request);
 
   let response;
   if (request.image) {
-    let decoded = Buffer.from(request.image, 'base64');
-    console.log(decoded);
+    let decoded = Buffer.from(request.image.split(',')[1], 'base64');
+    decoded.name = "image.png";
+  
     response = await openai.createImageVariation(
-      decoded.toString(),
+      decoded,
       request.numberOfImages,
       request.imageResolution
     );
@@ -34,8 +34,6 @@ export const handler = async (event) => {
       size: request.imageResolution,
     });
   }
-
-  console.log(response.data.data);
 
   return {
     statusCode: 200,

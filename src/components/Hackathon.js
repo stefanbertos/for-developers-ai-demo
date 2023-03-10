@@ -12,6 +12,7 @@ export function Hackathon(props) {
   const [generatedImages, setGeneratedImages] = useState([]);
 
   function generateImage() {
+    console.log(prompt, numberOfImages, imageResolution);
     API.post("openapi", "/image", {
       body: {
         prompt: prompt,
@@ -73,7 +74,7 @@ export function Hackathon(props) {
     },
     PromptTextAreaField: {
       defaultValue: prompt,
-      onChange: (newValue) => setPrompt(newValue),
+      onChange: (newValue) => {setPrompt(newValue.target.value)},
     },
     GenerateImageButton: {
       onClick: () => {
@@ -98,7 +99,6 @@ export function Hackathon(props) {
             name="myImage"
             accept="image/png"
             onChange={(event) => {
-              console.log(event);
               setSelectedImage(event.target.files[0]);
             }}
           />

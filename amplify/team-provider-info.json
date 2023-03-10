@@ -23,7 +23,7 @@
         "openapi": {
           "secretsPathAmplifyAppId": "d34wjlzj1f9v16",
           "deploymentBucketName": "amplify-aidemo-staging-100545-deployment",
-          "s3Key": "amplify-builds/openapi-516f5746617931354541-build.zip"
+          "s3Key": "amplify-builds/openapi-334d444f2b50354b706e-build.zip"
         }
       },
       "api": {
