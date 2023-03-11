@@ -15,32 +15,33 @@ const openai = new OpenAIApi(configuration);
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
 export const handler = async (event) => {
-  const request = JSON.parse(event.body);
+    console.log(event);
+    const request = JSON.parse(event.body);
 
-  let response;
-  if (request.image) {
-    let decoded = Buffer.from(request.image.split(',')[1], 'base64');
-    decoded.name = "image.png";
-  
-    response = await openai.createImageVariation(
-      decoded,
-      request.numberOfImages,
-      request.imageResolution
-    );
-  } else {
-    response = await openai.createImage({
-      prompt: request.prompt,
-      n: request.numberOfImages,
-      size: request.imageResolution,
-    });
-  }
+    let response;
+    if (request.image) {
+        let decoded = Buffer.from(request.image.split(',')[1], 'base64');
+        decoded.name = "image.png";
 
-  return {
-    statusCode: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "*",
-    },
-    body: JSON.stringify(response.data.data),
-  };
+        response = await openai.createImageVariation(
+            decoded,
+            request.numberOfImages,
+            request.imageResolution
+        );
+    } else {
+        response = await openai.createImage({
+            prompt: request.prompt,
+            n: request.numberOfImages,
+            size: request.imageResolution,
+        });
+    }
+
+    return {
+        statusCode: 200,
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "*",
+        },
+        body: JSON.stringify(response.data.data),
+    };
 };

@@ -16,7 +16,7 @@ import {
   TextAreaField,
 } from "@aws-amplify/ui-react";
 export default function HackathonDashboard(props) {
-  const { imageLoader, overrides, ...rest } = props;
+  const { overrides, ...rest } = props;
   return (
     <Flex
       gap="20px"
@@ -75,7 +75,6 @@ export default function HackathonDashboard(props) {
           isDisabled={false}
           labelHidden={false}
           variation="default"
-          defaultValue="a white siamese cat"
           {...getOverrideProps(overrides, "PromptTextAreaField")}
         ></TextAreaField>
         <Flex
@@ -88,9 +87,19 @@ export default function HackathonDashboard(props) {
           shrink="0"
           position="relative"
           padding="10px 10px 10px 10px"
-          children={imageLoader}
           {...getOverrideProps(overrides, "ImageLoader")}
-        ></Flex>
+        >
+          <Button
+            width="unset"
+            height="unset"
+            shrink="0"
+            size="default"
+            isDisabled={false}
+            variation="default"
+            children="Load image"
+            {...getOverrideProps(overrides, "LoadImageButton")}
+          ></Button>
+        </Flex>
       </Flex>
       <SelectField
         width="300px"
@@ -102,7 +111,6 @@ export default function HackathonDashboard(props) {
         isDisabled={false}
         labelHidden={false}
         variation="default"
-        defaultValue="list,bla"
         {...getOverrideProps(overrides, "ImageResolutionSelectField")}
       ></SelectField>
       <StepperField
@@ -114,8 +122,6 @@ export default function HackathonDashboard(props) {
         isDisabled={false}
         labelHidden={false}
         variation="default"
-        min="1"
-        max="10"
         {...getOverrideProps(overrides, "NumberOfImagesStepperField")}
       ></StepperField>
       <Flex

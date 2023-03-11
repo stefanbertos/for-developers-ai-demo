@@ -3,6 +3,8 @@ import { Banner, HackathonDashboard } from "../ui-components";
 import { Image } from "@aws-amplify/ui-react";
 import { Collection } from "@aws-amplify/ui-react";
 import { API } from "aws-amplify";
+import {toast, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export function Hackathon(props) {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -10,9 +12,10 @@ export function Hackathon(props) {
   const [numberOfImages, setNumberOfImages] = React.useState(1);
   const [prompt, setPrompt] = React.useState("a white siamese cat");
   const [generatedImages, setGeneratedImages] = useState([]);
-
+    const notifyToast = (info) => toast.info(info);
   function generateImage() {
     console.log(prompt, numberOfImages, imageResolution);
+    notifyToast("Generating");
     API.post("openapi", "/image", {
       body: {
         prompt: prompt,
@@ -69,6 +72,8 @@ export function Hackathon(props) {
       onChange: (e) => setImageResolution(e.target.value),
     },
     NumberOfImagesStepperField: {
+      min: 1,
+      max: 10,
       defaultValue: numberOfImages,
       onStepChange: (newValue) => setNumberOfImages(newValue),
     },
@@ -124,6 +129,8 @@ export function Hackathon(props) {
           />
         }
       />
+
+        <ToastContainer/>
 
       <Collection
         items={generatedImages}
