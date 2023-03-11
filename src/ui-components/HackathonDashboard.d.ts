@@ -22,6 +22,8 @@ export declare type HackathonDashboardOverridesProps = {
     GenerateVariationButton?: PrimitiveOverrideProps<ButtonProps>;
 } & EscapeHatchProps;
 export declare type HackathonDashboardProps = React.PropsWithChildren<Partial<FlexProps> & {
+    imageLoader?: React.ReactNode;
+} & {
     overrides?: HackathonDashboardOverridesProps | undefined | null;
 }>;
 export default function HackathonDashboard(props: HackathonDashboardProps): React.ReactElement;
